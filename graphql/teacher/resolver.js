@@ -1,22 +1,21 @@
-import Teacher from './model';
-
-const teacherResolver = {
-  RootQuery: {
-    teachers: async () => {
+export default {
+  Query: {
+    teachers: async (parent, args, { models: { Teacher } }) => {
       return await Teacher.find({});
     },
-    teacher: async (_, { id }) => {
+    teacher: async (parent, { id }, { models: { Teacher } }) => {
       return await Teacher.findById(id);
     },
   },
-  RootMutation: {
-    createTeacher: async (_, { teacher }) => {
+
+  Mutation: {
+    createTeacher: async (parent, { teacher }, { models: { Teacher } }) => {
       return await Teacher.create(teacher);
     },
-    deleteTeacher: async (_, { id }) => {
+    deleteTeacher: async (parent, { id }, { models: { Teacher } }) => {
       return await Teacher.findByIdAndRemove(id);
     },
-    updateTeacher: async (_, { id, teacher }) => {
+    updateTeacher: async (parent, { id, teacher }, { models: { Teacher } }) => {
       return await Teacher.findByIdAndUpdate(id, teacher, {
         new: true,
         upsert: true,
@@ -26,9 +25,8 @@ const teacherResolver = {
       });
     },
   },
+
   Teacher: {
     id: root => root._id || root.id,
   },
 };
-
-export default teacherResolver;

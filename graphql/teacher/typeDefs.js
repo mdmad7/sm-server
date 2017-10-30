@@ -1,5 +1,5 @@
 // Define your types here.
-const Teacher = `
+export default `
   type Teacher {
     id: ID!
     firstName: String!
@@ -16,6 +16,15 @@ const Teacher = `
     email: String
     password: String
   }
-`;
 
-export default Teacher;
+  type Query {
+    teachers: [Teacher!]!
+    teacher(id: ID!): Teacher
+  }
+
+  type Mutation {
+    createTeacher(teacher: InputTeacher!): Teacher
+    updateTeacher(id: ID!, teacher: InputTeacher): Teacher
+    deleteTeacher(id: ID!): Teacher
+  }
+`;
